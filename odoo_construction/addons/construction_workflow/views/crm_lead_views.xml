@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_construction" model="ir.ui.view">
+        <field name="name">crm.lead.form.construction</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add invisible field for computation -->
+            <xpath expr="//sheet" position="inside">
+                <field name="is_quotation_submitted" invisible="1"/>
+            </xpath>
+            
+            <!-- Hide the 'Won' button if not in Quotation Submitted stage -->
+            <xpath expr="//header/button[@name='action_set_won_rainbowman']" position="attributes">
+                <attribute name="invisible">not is_quotation_submitted</attribute>
+            </xpath>
+            
+            <!-- Replace priority stars with Site Visit Date in the inline fields -->
+            <xpath expr="//div[hasclass('o_lead_opportunity_form_inline_fields')]/field[@name='priority']" position="replace">
+                <span class="ms-3 me-1 fw-bold">Site Visit:</span>
+                <field name="site_visit_date" nolabel="1" class="oe_inline align-top" />
+            </xpath>
+
+            <!-- Add Site Photos to Extra Info (Leads) -->
+            <xpath expr="//page[@name='extra']/group" position="inside">
+                <group string="Site Visit Details" name="site_visit_details_lead">
+                    <field name="site_photos" widget="many2many_binary" string="Site Photos"/>
+                </group>
+            </xpath>
+            
+            <!-- Add Site Photos to Extra Information (Opportunities) -->
+            <xpath expr="//page[@name='lead']/group" position="inside">
+                <group string="Site Visit Details" name="site_visit_details_opp">
+                    <field name="site_photos" widget="many2many_binary" string="Site Photos"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Kanban View Modification -->
+    <record id="crm_lead_view_kanban_construction" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.construction</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <!-- Replace priority stars with Site Visit Date in Kanban card footer -->
+            <xpath expr="//field[@name='priority']" position="replace">
+                <field name="site_visit_date" class="fw-bold text-muted me-2" invisible="not site_visit_date" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

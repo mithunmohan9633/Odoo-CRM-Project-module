@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Design Phase -->
+        <record id="project_stage_design" model="project.project.stage">
+            <field name="name">Design Phase</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- Approval Phase -->
+        <record id="project_stage_approval" model="project.project.stage">
+            <field name="name">Approval Phase</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Construction Phase -->
+        <record id="project_stage_construction" model="project.project.stage">
+            <field name="name">Construction Phase</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Finishing Phase -->
+        <record id="project_stage_finishing" model="project.project.stage">
+            <field name="name">Finishing Phase</field>
+            <field name="sequence">80</field>
+        </record>
+    </data>
+</odoo>

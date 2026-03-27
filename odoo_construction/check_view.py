@@ -1,0 +1,13 @@
+import xmlrpc.client
+
+url = 'http://localhost:8069'
+db = 'construction_erp'
+username = 'admin'
+password = 'admin'
+
+common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
+uid = common.authenticate(db, username, password, {})
+models = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/object')
+
+views = models.execute_kw(db, uid, password, 'ir.ui.view', 'search_read', [[('name', '=', 'crm.lead.form.construction')], ['name', 'active', 'arch', 'inherit_id']])
+print("Views found:", views)
